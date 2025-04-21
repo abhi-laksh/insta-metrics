@@ -1,5 +1,6 @@
 export interface Post {
   id: string;
+  pk?: string; // Primary key from Instagram API
   title: string;
   imageUrl: string;
   impressions: number;
@@ -8,6 +9,7 @@ export interface Post {
   comments: number;
   saves: number;
   code?: string; // Instagram post code for creating post URLs
+  username?: string; // Instagram username
 }
 
 export interface MetricsData {

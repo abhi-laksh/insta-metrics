@@ -40,6 +40,23 @@ export interface MediaItem {
     };
     comment_count: number;
     like_count: number;
+    user?: {
+      pk?: string;
+      pk_id?: string;
+      id?: string;
+      username?: string;
+      full_name?: string;
+      is_private?: boolean;
+      is_verified?: boolean;
+      profile_pic_url?: string;
+    };
+    caption?: {
+      user?: {
+        username?: string;
+        full_name?: string;
+        profile_pic_url?: string;
+      };
+    };
   };
 }
 
@@ -87,8 +104,17 @@ export const convertToAppPosts = (data: InstagramApiResponse | null): Post[] => 
     if (section.layout_content && section.layout_content.medias) {
       section.layout_content.medias.forEach(mediaItem => {
         if (mediaItem.media) {
+          // Extract username from the appropriate location in the response
+          // Try multiple possible locations where the username might be stored
+          const username = 
+            mediaItem.media.user?.username || 
+            mediaItem.media.caption?.user?.username || 
+            'Unknown';
+            
           const post: Post = {
             id: mediaItem.media.id,
+            pk: mediaItem.media.pk,
+            username: username,
             title: `Post ${mediaItem.media.code}`,
             imageUrl: mediaItem.media.image_versions2?.candidates?.[0]?.url || '',
             impressions: 0, // Not available in the API
