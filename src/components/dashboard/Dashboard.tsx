@@ -17,7 +17,7 @@ export default function Dashboard() {
     totalReach: 0,
     totalLikes: 0,
     totalComments: 0,
-    totalSaves: 0,
+    totalReshares: 0,
     posts: [] as Post[]
   });
 
@@ -39,7 +39,7 @@ export default function Dashboard() {
           totalReach: 0,
           totalLikes: 0,
           totalComments: 0,
-          totalSaves: 0,
+          totalReshares: 0,
           posts: []
         });
       }
@@ -82,7 +82,7 @@ export default function Dashboard() {
                 reach: metricsData.totalReach,
                 likes: metricsData.totalLikes,
                 comments: metricsData.totalComments,
-                saves: metricsData.totalSaves
+                reshares: metricsData.totalReshares
               }} 
             />
           </section>

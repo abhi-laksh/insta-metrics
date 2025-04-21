@@ -7,7 +7,7 @@ export interface Post {
   reach: number;
   likes: number;
   comments: number;
-  saves: number;
+  reshares: number; // Changed from saves to reshares
   code?: string; // Instagram post code for creating post URLs
   username?: string; // Instagram username
 }
@@ -17,7 +17,7 @@ export interface MetricsData {
   totalReach: number;
   totalLikes: number;
   totalComments: number;
-  totalSaves: number;
+  totalReshares: number;
   posts: Post[];
 }
 
@@ -26,7 +26,7 @@ export const mockData: MetricsData = {
   totalReach: 98450,
   totalLikes: 15320,
   totalComments: 2845,
-  totalSaves: 3210,
+  totalReshares: 3210,
   posts: [
     {
       id: '1',
@@ -36,7 +36,7 @@ export const mockData: MetricsData = {
       reach: 19870,
       likes: 3240,
       comments: 542,
-      saves: 678
+      reshares: 678
     },
     {
       id: '2',
@@ -46,7 +46,7 @@ export const mockData: MetricsData = {
       reach: 15320,
       likes: 2150,
       comments: 325,
-      saves: 412
+      reshares: 412
     },
     {
       id: '3',
@@ -56,7 +56,7 @@ export const mockData: MetricsData = {
       reach: 12450,
       likes: 1870,
       comments: 289,
-      saves: 345
+      reshares: 345
     },
     {
       id: '4',

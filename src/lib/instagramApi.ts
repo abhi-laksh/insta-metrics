@@ -40,6 +40,8 @@ export interface MediaItem {
     };
     comment_count: number;
     like_count: number;
+    play_count?: number;
+    reshare_count?: number;
     user?: {
       pk?: string;
       pk_id?: string;
@@ -110,18 +112,33 @@ export const convertToAppPosts = (data: InstagramApiResponse | null): Post[] => 
             mediaItem.media.user?.username || 
             mediaItem.media.caption?.user?.username || 
             'Unknown';
-            
+          
+          // Get engagement metrics (use 0 as default for missing values)
+          const likes = mediaItem.media.like_count || 0;
+          const comments = mediaItem.media.comment_count || 0;
+          const plays = mediaItem.media.play_count || 0;
+          const reshares = mediaItem.media.reshare_count || 0;
+          
+          // Calculate total engagements
+          const totalEngagements = likes + comments + plays + reshares;
+          
+          // Calculate estimated reach and impressions using the formula
+          // Instagram engagement rate: 0.50% (0.005)
+          const instagramER = 0.005;
+          const estimatedReach = Math.round(totalEngagements / instagramER);
+          const estimatedImpressions = Math.round(estimatedReach * 1.6);
+          
           const post: Post = {
             id: mediaItem.media.id,
             pk: mediaItem.media.pk,
             username: username,
             title: `Post ${mediaItem.media.code}`,
             imageUrl: mediaItem.media.image_versions2?.candidates?.[0]?.url || '',
-            impressions: 0, // Not available in the API
-            reach: 0, // Not available in the API
-            likes: mediaItem.media.like_count || 0,
-            comments: mediaItem.media.comment_count || 0,
-            saves: 0, // Not available in the API
+            impressions: estimatedImpressions,
+            reach: estimatedReach,
+            likes: likes,
+            comments: comments,
+            reshares: reshares, // Using reshares instead of saves
             code: mediaItem.media.code // Add code for creating Instagram post URL
           };
           
@@ -142,7 +159,7 @@ export const calculateMetricsData = (data: InstagramApiResponse | null): Metrics
       totalReach: 0,
       totalLikes: 0,
       totalComments: 0,
-      totalSaves: 0,
+      totalReshares: 0,
       posts: []
     };
   }
@@ -150,20 +167,26 @@ export const calculateMetricsData = (data: InstagramApiResponse | null): Metrics
   const posts = convertToAppPosts(data);
   
   // Calculate totals
+  let totalImpressions = 0;
+  let totalReach = 0;
   let totalLikes = 0;
   let totalComments = 0;
+  let totalReshares = 0;
   
   posts.forEach(post => {
+    totalImpressions += post.impressions;
+    totalReach += post.reach;
     totalLikes += post.likes;
     totalComments += post.comments;
+    totalReshares += post.reshares;
   });
   
   return {
-    totalImpressions: 0, // Not available in the API
-    totalReach: 0, // Not available in the API
+    totalImpressions,
+    totalReach,
     totalLikes,
     totalComments,
-    totalSaves: 0, // Not available in the API
+    totalReshares,
     posts
   };
 };

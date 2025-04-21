@@ -27,7 +27,7 @@ export default function MetricsTable({ posts }: MetricsTableProps) {
             <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Reach</th>
             <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Likes</th>
             <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Comments</th>
-            <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Saves</th>
+            <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Reshares</th>
           </tr>
         </thead>
         <tbody className="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-800">
@@ -52,7 +52,7 @@ export default function MetricsTable({ posts }: MetricsTableProps) {
               <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-700 dark:text-gray-300">{post.reach.toLocaleString()}</td>
               <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-700 dark:text-gray-300">{post.likes.toLocaleString()}</td>
               <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-700 dark:text-gray-300">{post.comments.toLocaleString()}</td>
-              <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-700 dark:text-gray-300">{post.saves.toLocaleString()}</td>
+              <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-700 dark:text-gray-300">{post.reshares.toLocaleString()}</td>
             </tr>
           ))}
         </tbody>
